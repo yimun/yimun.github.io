@@ -1,0 +1,1333 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="7GWFR7_FMpiXLkO6Rm7aDNiRPmgj0Zxs6SZiF-iBtnI">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Yimu, Blog, 易木, 博客, 豆瓣, Android, 移动开发, 算法">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="从上大学开始，就开始零零碎碎地接触 Linux 系统，从大一开始我装了不下10次 Ubuntu ，折腾了一段时间之后又弃疗用回了 windows，这跟我写博客的经历有点像，很多东西需要一个契机，然后才能发生彻底的改变。这个契机就是在2015年暑假到豆瓣实习，当时我虽然主要从事的是 Android 开发，但是出于热情以及豆瓣完善的 Python 基础设施，我开始研究 Python，同事的电脑都是OS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Ubuntu 14.04的日常开发环境搭建">
+<meta property="og:url" content="http://yimu.me/2016/01/23/基于Ubuntu-14-04的日常开发环境搭建/index.html">
+<meta property="og:site_name" content="Yimu&#39;s Blog">
+<meta property="og:description" content="从上大学开始，就开始零零碎碎地接触 Linux 系统，从大一开始我装了不下10次 Ubuntu ，折腾了一段时间之后又弃疗用回了 windows，这跟我写博客的经历有点像，很多东西需要一个契机，然后才能发生彻底的改变。这个契机就是在2015年暑假到豆瓣实习，当时我虽然主要从事的是 Android 开发，但是出于热情以及豆瓣完善的 Python 基础设施，我开始研究 Python，同事的电脑都是OS">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yimu.me/image/1453705459339.png">
+<meta property="og:image" content="http://yimu.me/image/1453706763250.png">
+<meta property="og:image" content="http://yimu.me/image/1453707411276.png">
+<meta property="og:image" content="http://yimu.me/image/1453723642430.png">
+<meta property="og:image" content="http://yimu.me/image/1453724296535.png">
+<meta property="og:image" content="http://yimu.me/image/1453726895129.png">
+<meta property="og:image" content="http://yimu.me/image/1453727161924.png">
+<meta property="og:image" content="http://yimu.me/image/1453727224744.png">
+<meta property="og:image" content="http://yimu.me/image/1453725551959.png">
+<meta property="og:image" content="http://yimu.me/image/1453706618541.png">
+<meta property="og:updated_time" content="2020-06-24T06:28:19.047Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Ubuntu 14.04的日常开发环境搭建">
+<meta name="twitter:description" content="从上大学开始，就开始零零碎碎地接触 Linux 系统，从大一开始我装了不下10次 Ubuntu ，折腾了一段时间之后又弃疗用回了 windows，这跟我写博客的经历有点像，很多东西需要一个契机，然后才能发生彻底的改变。这个契机就是在2015年暑假到豆瓣实习，当时我虽然主要从事的是 Android 开发，但是出于热情以及豆瓣完善的 Python 基础设施，我开始研究 Python，同事的电脑都是OS">
+<meta name="twitter:image" content="http://yimu.me/image/1453705459339.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yimu.me/2016/01/23/基于Ubuntu-14-04的日常开发环境搭建/">
+
+
+
+
+
+  <title>基于Ubuntu 14.04的日常开发环境搭建 | Yimu's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-67911993-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?226cee0dbc85b76161f9f1234e2a37f2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yimu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">在翻山越岭的尽头，正当年少</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yimu.me/2016/01/23/基于Ubuntu-14-04的日常开发环境搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Linwei Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/4262706?v=3&s=120">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yimu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">基于Ubuntu 14.04的日常开发环境搭建</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-23T22:41:20+00:00">
+                2016-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从上大学开始，就开始零零碎碎地接触 Linux 系统，从大一开始我装了不下10次 Ubuntu ，折腾了一段时间之后又弃疗用回了 windows，这跟我写博客的经历有点像，很多东西需要一个契机，然后才能发生彻底的改变。这个契机就是在2015年暑假到豆瓣实习，当时我虽然主要从事的是 Android 开发，但是出于热情以及豆瓣完善的 Python 基础设施，我开始研究 Python，同事的电脑都是OSX，实习之前脑袋一热掏钱买了台最新的 Thinkpad T450s，性能自然没得说，但看到同事都用Mac心里还是有点后悔的，扯远了，说到豆瓣的基础设施，很多都是基于*nix开发的，在windows下我也折腾过类似mingw或者cygwin之类的东西，但是用着实在不爽，后面干脆就彻底抛弃了windows，装了 Ubuntu 14.04，发现开发Android也方便多了，Terminal 各种高效的工具用得得心应手，于是就抛弃了 Windows（除了有时候切回去打炉石。。。）。</p>
+<a id="more"></a>
+<p>想来还是把这些记录一下，一方面是做个笔记方便以后查看，另外一方面也可以给想搭建 Ubuntu 开发环境的同学们一个参考。</p>
+<h3 id="安利下Ubuntu的优点："><a href="#安利下Ubuntu的优点：" class="headerlink" title="安利下Ubuntu的优点："></a>安利下Ubuntu的优点：</h3><ul>
+<li>一个流畅的Linux桌面，可以自己定制各种窗口效果，媲美 OSX</li>
+<li>我认为最重要的是贴近服务器环境，对程序员友好，各种开发环境的搭建都有比较成熟简便的解决方案，不会像 windows下配环境有各种蛋疼的问题（当然如果你想做.net之流另说）</li>
+<li>远离各种国产流氓软件，同时没有了各种游戏，能让你更专注于工作</li>
+<li>当然还有就是成本低，配置一般的电脑均可安装</li>
+</ul>
+<p>仅供参考，下面是我的 Ubuntu 桌面:<br><img src="/image/1453705459339.png" alt></p>
+<p><img src="/image/1453706763250.png" alt></p>
+<h2 id="一-安装篇"><a href="#一-安装篇" class="headerlink" title="一. 安装篇"></a>一. 安装篇</h2><ul>
+<li>Ubuntu 14.04 LTS live CD制作启动盘</li>
+<li>建议拿出至少30G的空间，分区什么的网上都有教程，我比较省事，一个交换分区和+主分区搞定了</li>
+<li>个人推荐 windows 和 Ubuntu 双系统，或者 Ubuntu + windows虚拟机，以应付一些不时之需（网银，企业网站等）</li>
+<li>具体安装流程就是U盘启动安装后一路next下去就行了</li>
+</ul>
+<h2 id="二-日常软件篇"><a href="#二-日常软件篇" class="headerlink" title="二. 日常软件篇"></a>二. 日常软件篇</h2><h3 id="系统配置工具"><a href="#系统配置工具" class="headerlink" title="系统配置工具"></a>系统配置工具</h3><p>介绍几个配置系统的工具:</p>
+<ul>
+<li>自带系统配置：基本满足日常的系统设置</li>
+<li><code>unity tweak tool</code>：升级版的系统设置</li>
+<li><code>Ubuntu tweak</code>：貌似是国产软件，有类似一件垃圾清理的功能，功能大部分和 unity tweak tool 重复</li>
+<li><code>compiz</code>：定制各种桌面特效，由于权限比较大经常把桌面搞崩了，这时候下面这个<strong>重置unity桌面配置</strong>的解决方案就派上用场了<blockquote>
+<p>// Terminal输入:<br>dconf reset -f /org/compiz/<br>setsid unity</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Terminal-配置"><a href="#Terminal-配置" class="headerlink" title="Terminal 配置"></a>Terminal 配置</h3><p>在Ubuntu下一个好的Terminal能够数倍提升工作效率，我也花了很多的时间在折腾Terminal的配置上，最终效果如下：<br><img src="/image/1453707411276.png" alt></p>
+<p>主要使用到了以下几个工具：</p>
+<h4 id="oh-my-zsh"><a href="#oh-my-zsh" class="headerlink" title="oh-my-zsh"></a>oh-my-zsh</h4><p>zsh是一个扩展的bash，比bash好用不只一点点，<a href="http://ohmyz.sh/" target="_blank" rel="noopener">oh-my-zsh</a>是zsh之上的一个开源配置，包含了各种插件和主题，安装和配置过程<a href="https://github.com/robbyrussell/oh-my-zsh/wiki" target="_blank" rel="noopener">文档</a>里面都很详细了，在这里不赘述。</p>
+<p>主要优点如下：</p>
+<ul>
+<li>智能跳转，配合<code>autojump</code>插件，基本不需要输入<code>cd</code>，自动定位到你最经常去的目录</li>
+<li>智能补全，大小写自动纠正，触发补全只需要按一下或两下 tab 键，补全项可以使用 ctrl+n/p/f/b上下左右切换。比如你想杀掉 java 的进程，只需要输入 <code>kill java</code> + tab键，如果只有一个 java 进程，zsh 会自动替换为进程的 pid，如果有多个则会出现选择项供你选择。ssh + 空格 + 两个tab键，zsh会列出所有访问过的主机和用户名进行补全</li>
+<li>特色主题，实时显示 git 状态</li>
+<li>各种插件支持，<a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview" target="_blank" rel="noopener">插件一览</a></li>
+</ul>
+<h4 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h4><p>Ubuntu自带的Terminal并没有支持分屏，多tab支持也不是很好用，我使用了<a href="https://tmux.github.io/" target="_blank" rel="noopener">tmux</a>作为软件分屏工具，通过快捷键快速创建会话和窗口，还有一大优点是窗口意外关闭后还可以通过<code>tmux attach</code>的方式恢复之前的窗口会话。这里提供了一份Tmux的快捷键速查表<a href="https://gist.github.com/MohamedAlaa/2961058" target="_blank" rel="noopener">tmux cheatsheet</a></p>
+<h4 id="vim-之-spf13-懒人配置"><a href="#vim-之-spf13-懒人配置" class="headerlink" title="vim 之 spf13 懒人配置"></a>vim 之 spf13 懒人配置</h4><p>Terminal下自然离不开vim的使用，关于vim的配置估计能写本书了，沿袭了一贯的懒人作风，我使用了最近很火的 <a href="http://vim.spf13.com/" target="_blank" rel="noopener">spf13</a> 配置，这个方案基本一键解决了基本的vim配置。</p>
+<p>个人其实不是很推荐 spf13 默认的 solorized 主题，注意如果你想要的 Terminal 的vim 中使用 Solorized 主题的话，你还需要为你的Terminal安装 Solorized 主题，<a href="http://www.if-not-true-then-false.com/2012/solarized-Linux/#respond" target="_blank" rel="noopener">安装方法</a>。</p>
+<p>上张我的 vim 配置好 spf13 的图：<br><img src="/image/1453723642430.png" alt></p>
+<h3 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h3><h4 id="Sublime-Text-3"><a href="#Sublime-Text-3" class="headerlink" title="Sublime Text 3"></a>Sublime Text 3</h4><p>作为 windows 时代的忠实伴侣，在 Ubuntu 上的体验却不怎么好，主要是由于 Sublime 众所周知的大bug——不能输入中文，虽然网上有了解决输入法的<a href="http://blog.csdn.net/tao_627/article/details/45126047" target="_blank" rel="noopener">兼容方案</a>，但是该方案仍然存在问题：</p>
+<ol>
+<li>只有显式指定了兼容库启动才能正常使用输入法，单击图标启动就不行了</li>
+<li>当使用兼容库启动时，菜单栏中的一些选项点击后会卡死，比如 <code>Browse Package</code>，Terminal 插件也无法使用</li>
+</ol>
+<p>当然 Sublime 应付大部分的编辑工作还是没有问题的，不过，既然我们使用 Linux 了，为什么不用 Vim 呢？</p>
+<h4 id="IDEA-一家子"><a href="#IDEA-一家子" class="headerlink" title="IDEA 一家子"></a>IDEA 一家子</h4><ol>
+<li>Android 开发之 <a href="http://developer.android.com/sdk/index.html" target="_blank" rel="noopener">Android Studio</a>，官方推荐的IDE，亲测在Ubuntu下启动比windows快得多，无卡顿，编译速度也提升不少。</li>
+<li>python 开发之  <a href="https://www.jetbrains.com/pycharm/" target="_blank" rel="noopener">PyCharm</a>，很好用，但是怎么说，也许是 IDE 帮你做得太多了，用着总感觉不爽</li>
+<li>前端开发之 <a href="https://www.jetbrains.com/webstorm/" target="_blank" rel="noopener">WebStorm</a></li>
+</ol>
+<h4 id="望而却步的-Emacs"><a href="#望而却步的-Emacs" class="headerlink" title="望而却步的 Emacs"></a>望而却步的 Emacs</h4><p>作为一名编辑器折腾狂，没有接触过编辑器之神 Emacs 那是不应该的，相比与 vim 的 spf13 配置，Emacs 也有类似的整套解决方案——<a href="https://github.com/bbatsov/prelude" target="_blank" rel="noopener">Prelude</a>，功能十分全，也是支持插件扩展的。</p>
+<p>然而，<br>个人觉得 Emacs 操作系统上最好的编辑器还是 evil  （逃。。。</p>
+<h3 id="日常软件"><a href="#日常软件" class="headerlink" title="日常软件"></a>日常软件</h3><h4 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h4><p>输入法我用过 <code>谷歌拼音输入法</code> 和 <code>搜狗拼音输入法</code>，这里要吐槽下，谷歌拼音的单词联想完全不能用，常用词都经常找不到，所以还是墙裂建议使用 <a href="http://pinyin.sogou.com/Linux/" target="_blank" rel="noopener">搜狗拼音</a>。</p>
+<p>注意：搜狗拼音是基于fctix的，但是千万别遵循网上某些教程说的把<code>iBus</code>删除了，否则Ubuntu每次启动的时候都会报错，原因是iBus和某些系统组件有依赖关系。</p>
+<p><img src="/image/1453724296535.png" alt></p>
+<h4 id="印象笔记-马克飞象"><a href="#印象笔记-马克飞象" class="headerlink" title="印象笔记+马克飞象"></a>印象笔记+马克飞象</h4><ul>
+<li>印象笔记并没有  Linux 版本，但是chrome可以把<a href="https://www.yinxiang.com/" target="_blank" rel="noopener">网页版</a>的保存成网页应用，这样每次点击的时候就可以打开新窗口运行，和原生应用区别也不大。<br><img src="/image/1453726895129.png" alt><br><img src="/image/1453727161924.png" alt></li>
+</ul>
+<ul>
+<li><a href="https://maxiang.io" target="_blank" rel="noopener">马克飞象</a>是一个支持markdown编辑的印象笔记编辑器，由国人制作，是付费软件但是个人觉得还是蛮值的，日常记笔记同步笔记十分方便，本文就是使用马象进行编辑<br><img src="/image/1453727224744.png" alt></li>
+</ul>
+<h4 id="IM-解决方案"><a href="#IM-解决方案" class="headerlink" title="IM 解决方案"></a>IM 解决方案</h4><ul>
+<li>QQ：关于QQ在Ubuntu上的安装网上有无数的博客，我基本都一一尝试了，然后得出结论，到目前(<code>2016.1.25</code>)为止，最好用的 QQ 解决方案是这个 <a href="http://blog.csdn.net/yuan1164345228/article/details/20449459" target="_blank" rel="noopener">Linux QQ国际版安装</a> ，即使是最好用的版本，还是存在很多问题:<ul>
+<li>漫游记录无法使用，只能保存本地的</li>
+<li>文件传输经常失败</li>
+<li>视频就别想用了</li>
+<li>主界面隐藏后就再也没法调出了，我的解决方案是：QQ放在一个单独的工作区，然后开启<code>始终保持在其他窗口前端</code>选项，这样就不会有任何窗口覆盖QQ主界面了</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/1453725551959.png" alt></p>
+<p>最后吐槽下，Linux下最好用的 QQ 都这样你敢信？</p>
+<ul>
+<li><p>Slack：如果你们的团队支持，我是强烈推荐使用Slack的，功能，体验都是一流的，主要是跟 github，CI，trello 等连接后功能变得十分强大。</p>
+</li>
+<li><p>Skype：不用说了，老牌IM，豆瓣内部也在使用，但是我们已经开始逐步过渡到 Slack 。然后 Ubuntu 版本的体验比较渣。</p>
+</li>
+</ul>
+<h4 id="办公软件-WPS"><a href="#办公软件-WPS" class="headerlink" title="办公软件 WPS"></a>办公软件 WPS</h4><p>Ubuntu 自带了全套 LibreOffice，但是对 MS Office文件的兼容惨不忍睹，所以还是推荐使用良心国产软件 <a href="http://community.wps.cn/download/" target="_blank" rel="noopener">WPS</a>，界面精良，基本能够满足日常的办公软件需求。</p>
+<h2 id="三-个人配置篇"><a href="#三-个人配置篇" class="headerlink" title="三. 个人配置篇"></a>三. 个人配置篇</h2><h3 id="capslock键映射为control键"><a href="#capslock键映射为control键" class="headerlink" title="capslock键映射为control键"></a>capslock键映射为control键</h3><p>此处为emacs党福音，将不常使用的capslock键映射成control，告别扭曲的小拇指：</p>
+<ol>
+<li>打开dash，查找<code>启动应用程序</code>，添加开机启动项</li>
+<li>单击<code>添加</code>，名称自定，命令为<code>setxkbmap -option ctrl:nocaps</code></li>
+<li>重启系统完成设置</li>
+</ol>
+<h3 id="关闭USB移动设备的自动弹出"><a href="#关闭USB移动设备的自动弹出" class="headerlink" title="关闭USB移动设备的自动弹出"></a>关闭USB移动设备的自动弹出</h3><p>这个比较难找，记录一下：系统设置-&gt;详细信息-&gt;勾选介质插入时不提示或启动程序<br><img src="/image/1453706618541.png" alt></p>
+<h2 id="四-最后"><a href="#四-最后" class="headerlink" title="四. 最后"></a>四. 最后</h2><p>折腾了这么多，还是想忠告大家一句，如果不差钱的话，还是老实上 Mac 吧，找一个顺手开箱即用的工作，好好提升工作效率才是王道。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/image/wechatpay.png" alt="Linwei Zhang WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/16/论Android后台Service的持久性/" rel="next" title="论Android后台Service的持久性">
+                <i class="fa fa-chevron-left"></i> 论Android后台Service的持久性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/07/关于开屏动图广告/" rel="prev" title="Android 开屏动图广告">
+                Android 开屏动图广告 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://avatars1.githubusercontent.com/u/4262706?v=3&s=120" alt="Linwei Zhang">
+          <p class="site-author-name" itemprop="name">Linwei Zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yimun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/linwei-zhang-926b60121/" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://douban.com/people/yimun" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/yimun" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ol class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/2018/01/21/P-贴图和文件分享工具/" title="P-贴图和文件分享工具" target="_blank">P-贴图和文件分享工具</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/02/一种移动应用Http请求的加密方法——以Android为例/" title="一种移动应用Http请求的加密方法——以Android为例" target="_blank">一种移动应用Http请求的加密方法——以Android为例</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/17/使用ContentProvider实现跨进程方法调用-RPC/" title="使用ContentProvider实现跨进程方法调用(RPC)" target="_blank">使用ContentProvider实现跨进程方法调用(RPC)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/23/Android-消息机制和多线程/" title="Android 消息机制和多线程" target="_blank">Android 消息机制和多线程</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/22/Android-View-事件分发和冲突解决/" title="Android View 事件分发和冲突解决" target="_blank">Android View 事件分发和冲突解决</a>
+          </li>
+        
+      </ol>
+    </div>
+
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安利下Ubuntu的优点："><span class="nav-number">1.</span> <span class="nav-text">安利下Ubuntu的优点：</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#一-安装篇"><span class="nav-number"></span> <span class="nav-text">一. 安装篇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-日常软件篇"><span class="nav-number"></span> <span class="nav-text">二. 日常软件篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统配置工具"><span class="nav-number">1.</span> <span class="nav-text">系统配置工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Terminal-配置"><span class="nav-number">2.</span> <span class="nav-text">Terminal 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#oh-my-zsh"><span class="nav-number">2.1.</span> <span class="nav-text">oh-my-zsh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tmux"><span class="nav-number">2.2.</span> <span class="nav-text">tmux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vim-之-spf13-懒人配置"><span class="nav-number">2.3.</span> <span class="nav-text">vim 之 spf13 懒人配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发工具"><span class="nav-number">3.</span> <span class="nav-text">开发工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sublime-Text-3"><span class="nav-number">3.1.</span> <span class="nav-text">Sublime Text 3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IDEA-一家子"><span class="nav-number">3.2.</span> <span class="nav-text">IDEA 一家子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#望而却步的-Emacs"><span class="nav-number">3.3.</span> <span class="nav-text">望而却步的 Emacs</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日常软件"><span class="nav-number">4.</span> <span class="nav-text">日常软件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#输入法"><span class="nav-number">4.1.</span> <span class="nav-text">输入法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#印象笔记-马克飞象"><span class="nav-number">4.2.</span> <span class="nav-text">印象笔记+马克飞象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IM-解决方案"><span class="nav-number">4.3.</span> <span class="nav-text">IM 解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#办公软件-WPS"><span class="nav-number">4.4.</span> <span class="nav-text">办公软件 WPS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-个人配置篇"><span class="nav-number"></span> <span class="nav-text">三. 个人配置篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#capslock键映射为control键"><span class="nav-number">1.</span> <span class="nav-text">capslock键映射为control键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭USB移动设备的自动弹出"><span class="nav-number">2.</span> <span class="nav-text">关闭USB移动设备的自动弹出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-最后"><span class="nav-number"></span> <span class="nav-text">四. 最后</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Linwei Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yimu.me/2016/01/23/基于Ubuntu-14-04的日常开发环境搭建/';
+          this.page.identifier = '2016/01/23/基于Ubuntu-14-04的日常开发环境搭建/';
+          this.page.title = '基于Ubuntu 14.04的日常开发环境搭建';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yimublog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

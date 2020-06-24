@@ -1,0 +1,1324 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="7GWFR7_FMpiXLkO6Rm7aDNiRPmgj0Zxs6SZiF-iBtnI">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="LeetCode,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="周末睡了个大懒觉，10:30起来匆匆洗漱后只提交了签到题，之后花了一个多小时完成了后面的题目。下不为例，在这里还是记录下吧。 计算机算法主要还是熟练度的掌握和算法的理解，需要不断的练习。从而达到遇到一道新算法，能产生一种『这题我曾见过的』的感觉。  时间：2017/5/14竞赛链接：https://leetcode.com/contest/leetcode-weekly-contest-32">
+<meta name="keywords" content="LeetCode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode Weekly Contest 32 题解">
+<meta property="og:url" content="http://yimu.me/2017/05/14/Leetcode-Weekly-Contest-32-题解/index.html">
+<meta property="og:site_name" content="Yimu&#39;s Blog">
+<meta property="og:description" content="周末睡了个大懒觉，10:30起来匆匆洗漱后只提交了签到题，之后花了一个多小时完成了后面的题目。下不为例，在这里还是记录下吧。 计算机算法主要还是熟练度的掌握和算法的理解，需要不断的练习。从而达到遇到一道新算法，能产生一种『这题我曾见过的』的感觉。  时间：2017/5/14竞赛链接：https://leetcode.com/contest/leetcode-weekly-contest-32">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yimu.me/image/erect_the_fence_1.png">
+<meta property="og:image" content="http://yimu.me/image/erect_the_fence_2.png">
+<meta property="og:updated_time" content="2020-06-24T06:28:19.043Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode Weekly Contest 32 题解">
+<meta name="twitter:description" content="周末睡了个大懒觉，10:30起来匆匆洗漱后只提交了签到题，之后花了一个多小时完成了后面的题目。下不为例，在这里还是记录下吧。 计算机算法主要还是熟练度的掌握和算法的理解，需要不断的练习。从而达到遇到一道新算法，能产生一种『这题我曾见过的』的感觉。  时间：2017/5/14竞赛链接：https://leetcode.com/contest/leetcode-weekly-contest-32">
+<meta name="twitter:image" content="http://yimu.me/image/erect_the_fence_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yimu.me/2017/05/14/Leetcode-Weekly-Contest-32-题解/">
+
+
+
+
+
+  <title>LeetCode Weekly Contest 32 题解 | Yimu's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-67911993-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?226cee0dbc85b76161f9f1234e2a37f2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yimu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">在翻山越岭的尽头，正当年少</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yimu.me/2017/05/14/Leetcode-Weekly-Contest-32-题解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Linwei Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/4262706?v=3&s=120">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yimu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">LeetCode Weekly Contest 32 题解</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T14:50:44+00:00">
+                2017-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>周末睡了个大懒觉，10:30起来匆匆洗漱后只提交了签到题，之后花了一个多小时完成了后面的题目。下不为例，在这里还是记录下吧。</p>
+<p>计算机算法主要还是熟练度的掌握和算法的理解，需要不断的练习。从而达到遇到一道新算法，能产生一种『这题我曾见过的』的感觉。</p>
+</blockquote>
+<p>时间：2017/5/14<br>竞赛链接：<a href="https://leetcode.com/contest/leetcode-weekly-contest-32" target="_blank" rel="noopener">https://leetcode.com/contest/leetcode-weekly-contest-32</a></p>
+<a id="more"></a>
+<h1 id="581-Shortest-Unsorted-Continuous-Subarray"><a href="#581-Shortest-Unsorted-Continuous-Subarray" class="headerlink" title="581. Shortest Unsorted Continuous Subarray"></a><a href="https://leetcode.com/contest/leetcode-weekly-contest-32/problems/shortest-unsorted-continuous-subarray/" target="_blank" rel="noopener">581. Shortest Unsorted Continuous Subarray</a></h1><blockquote><br>Given an integer array, you need to find one <strong>continuous subarray</strong> that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order, too.<br><br>You need to find the <strong>shortest</strong> such subarray and output its length.<br><br><strong>Example 1:</strong><br><strong>Input:</strong> [2, 6, 4, 8, 10, 9, 15]<br><strong>Output:</strong> 5<br><strong>Explanation:</strong> You need to sort [6, 4, 8, 10, 9] in ascending order to make the whole array sorted in ascending order.<br><br><strong>Note:</strong><br>1. Then length of the input array is in range [1, 10,000].<br>2. The input array may contain duplicates, so ascending order here means <strong>&lt;=</strong>.<br></blockquote>
+
+<p>找出数组排成递增序列最少需要操作的连续元素个数，即未排序的子数组长度。</p>
+<h2 id="思路一：排序比较法"><a href="#思路一：排序比较法" class="headerlink" title="思路一：排序比较法"></a>思路一：排序比较法</h2><ul>
+<li>时间复杂度：$O(logN)$ </li>
+<li>空间复杂度：$O(N)$</li>
+</ul>
+<p>这是很容易想到的一种解法，这题比较简单的思路是：先拷贝一个新的数组B，对数组B进行排序。然后将数组A和数组B首尾依次进行比较，直到遇到不相等的数字为止，这时得到的首尾下标之差即为子数组的长度。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findUnsortedSubarray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; sorted;</span><br><span class="line">        sorted.assign(nums.begin(), nums.end());</span><br><span class="line">        sort(sorted.begin(), sorted.end());</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>, r=nums.size()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(l &lt; nums.size() &amp;&amp; nums[l] == sorted[l]) l++;</span><br><span class="line">        <span class="keyword">while</span>(r &gt;= l &amp;&amp; nums[r] == sorted[r]) r--;</span><br><span class="line">        <span class="keyword">return</span> r - l + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="思路二：首尾指针搜索"><a href="#思路二：首尾指针搜索" class="headerlink" title="思路二：首尾指针搜索"></a>思路二：首尾指针搜索</h2><ul>
+<li>时间复杂度：$O(n)$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<p>定义两个变量，<code>begin</code>表示子数组的开始位置，<code>end</code>表示子数组的结束位置<br>设置两个搜索方向：</p>
+<ul>
+<li>第一个方向为从头到尾搜索，保存一个变量<code>mmax</code>，表示当前位置之前所遇到的最大值。当遇到元素小于<code>mmax</code>时，更新<code>end</code>坐标</li>
+<li>第二个方向从尾部往头部搜索，保存一个变量<code>mmin</code>，表示当前位置之后所遇到的最小值。当遇到有元素大于<code>mmin</code>时，更新<code>begin</code>坐标</li>
+</ul>
+<p>其中需要特别注意一下元素个数小于2的情况，初始化令<code>beg=-1</code>,<code>end=-2</code>，可以体会一下为什么这么设置。</p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findUnsortedSubarray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = A.size(), beg = <span class="number">-1</span>, end = <span class="number">-2</span>, mmin = A[n<span class="number">-1</span>], mmax = A[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; A.size(); i++) &#123;</span><br><span class="line">          mmax = max(mmax, A[i]);</span><br><span class="line">          mmin = min(mmin, A[n<span class="number">-1</span>-i]);</span><br><span class="line">          <span class="keyword">if</span> (A[i] &lt; mmax) end = i;                </span><br><span class="line">          <span class="keyword">if</span> (A[n<span class="number">-1</span>-i] &gt; mmin) beg = n<span class="number">-1</span>-i; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> end - beg + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="582-Kill-Process"><a href="#582-Kill-Process" class="headerlink" title="582. Kill Process"></a><a href="https://leetcode.com/contest/leetcode-weekly-contest-32/problems/kill-process/" target="_blank" rel="noopener">582. Kill Process</a></h1><blockquote><br>Given <strong>n</strong> processes, each process has a unique <strong>PID (process id)</strong> and its <strong>PPID (parent process id)</strong>.<br><br>Each process only has one parent process, but may have one or more children processes. This is just like a tree structure. Only one process has PPID that is 0, which means this process has no parent process. All the PIDs will be distinct positive integers.<br><br>We use two list of integers to represent a list of processes, where the first list contains PID for each process and the second list contains the corresponding PPID.<br><br>Now given the two lists, and a PID representing a process you want to kill, return a list of PIDs of processes that will be killed in the end. You should assume that when a process is killed, all its children processes will be killed. No order is required for the final answer.<br><br><strong>Example 1:</strong><br><strong>Input:</strong><br>pid =  [1, 3, 10, 5]<br>ppid = [3, 0, 5, 3]<br>kill = 5<br><strong>Output:</strong> [5,10]<br><strong>Explanation:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   3</span><br><span class="line"> /   \</span><br><span class="line">1     5</span><br><span class="line">     /</span><br><span class="line">    10</span><br></pre></td></tr></table></figure><br><br>Kill 5 will also kill 10.<br><br><strong>Note:</strong><br>1. The given kill id is guaranteed to be one of the given PIDs.<br>2. n &gt;= 1.<br></blockquote>
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>进程树问题，在杀掉父进程后，该进程的子进程也要被杀掉。其实就是树的搜索算法变种，这个地方由于没有顺序的要求，<code>DFS</code>和<code>BFS</code>都是可以的。唯一需要的注意的是：由于数据结构的限制，需要通过预处理来找到一个节点的所有子节点，用<code>map</code>存储。</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">killProcess</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; pid, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ppid, <span class="keyword">int</span> kill)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; &gt; child;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ppid.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (child.find(ppid[i]) == child.end()) &#123;</span><br><span class="line">                <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">                child[ppid[i]] = s;</span><br><span class="line">            &#125;</span><br><span class="line">            child[ppid[i]].insert(pid[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        s.push(kill);</span><br><span class="line">        <span class="keyword">while</span>(!s.empty()) &#123;</span><br><span class="line">            <span class="keyword">int</span> k = s.top();</span><br><span class="line">            res.push_back(k);</span><br><span class="line">            s.pop();</span><br><span class="line">            <span class="keyword">if</span> (child.find(k) != child.end())&#123; </span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">auto</span> p : child[k]) &#123;</span><br><span class="line">                    s.push(p);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="583-Delete-Operation-for-Two-Strings"><a href="#583-Delete-Operation-for-Two-Strings" class="headerlink" title="583. Delete Operation for Two Strings"></a><a href="https://leetcode.com/contest/leetcode-weekly-contest-32/problems/delete-operation-for-two-strings/" target="_blank" rel="noopener">583. Delete Operation for Two Strings</a></h1><blockquote><br>Given two words <em>word1</em> and <em>word2</em>, find the minimum number of steps required to make <em>word1</em> and <em>word2</em> the same, where in each step you can delete one character in either string.<br><br><strong>Example 1:</strong><br><strong>Input:</strong> “sea”, “eat”<br><strong>Output:</strong> 2<br><strong>Explanation:</strong> You need one step to make “sea” to “ea” and another step to make “eat” to “ea”.<br><br><strong>Note:</strong><br>1. The length of given words won’t exceed 500.<br>2. Characters in given words can only be lower-case letters.<br></blockquote>
+
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>给定两个字符串，只提供删除字符操作，找出将两个字符串变成相同字符串的最少删除操作次数。</p>
+<p>典型的<a href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97" target="_blank" rel="noopener">最长公共子序列</a>问题，属于比较基础的 <strong>动态规划</strong> 问题，相关的问题还有<a href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2" target="_blank" rel="noopener">最长公共子串</a>，具体这里就不再描述了。</p>
+<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="built_in">string</span> sx, <span class="built_in">string</span> sy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> opt[sx.size() + <span class="number">1</span>][sy.size() + <span class="number">1</span>] ;</span><br><span class="line">        <span class="built_in">memset</span>(opt, <span class="number">0</span>, <span class="keyword">sizeof</span>(opt));</span><br><span class="line">        <span class="keyword">int</span> mm = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = sx.size() - <span class="number">1</span> ; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = sy.size() - <span class="number">1</span> ; j &gt;= <span class="number">0</span> ; j--) &#123;</span><br><span class="line">                <span class="keyword">if</span> (sx[i] == sy[j]) &#123;</span><br><span class="line">                    opt[i][j] = opt[i + <span class="number">1</span>][j + <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    opt[i][j] = max(opt[i + <span class="number">1</span>][j], opt[i][j + <span class="number">1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">                mm = max(opt[i][j], mm);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (sx.size() - mm) + (sy.size() - mm);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="587-Erect-the-Fence"><a href="#587-Erect-the-Fence" class="headerlink" title="587. Erect the Fence"></a><a href="https://leetcode.com/contest/leetcode-weekly-contest-32/problems/erect-the-fence/" target="_blank" rel="noopener">587. Erect the Fence</a></h1><blockquote><br>There are some trees, where each tree is represented by (x,y) coordinate in a two-dimensional garden. Your job is to fence the entire garden using the <strong>minimum length</strong> of rope as it is expensive. The garden is well fenced only if all the trees are enclosed. Your task is to help find the coordinates of trees which are exactly located on the fence perimeter.<br><br><strong>Example 1:</strong><br><strong>Input:</strong> [[1,1],[2,2],[2,0],[2,4],[3,3],[4,2]]<br><strong>Output:</strong> [[1,1],[2,0],[4,2],[3,3],[2,4]]<br><strong>Explanation:</strong><br><img src="/image/erect_the_fence_1.png" alt><br><br><strong>Example 2:</strong><br><strong>Input:</strong> [[1,2],[2,2],[4,2]]<br><strong>Output:</strong> [[1,2],[2,2],[4,2]]<br><strong>Explanation:</strong><br><img src="/image/erect_the_fence_2.png" alt><br>Even you only have trees in a line, you need to use rope to enclose them.<br><br><br>Note:<br>1. All trees should be enclosed together. You cannot cut the rope to enclose trees that will separate them in more than one group.<br>2. All input integers will range from 0 to 100.<br>3. The garden has at least one tree.<br>4. All coordinates are distinct.<br>5. Input points have <strong>NO</strong> order. No order required for output.<br></blockquote>
+
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>典型的 <a href="https://zh.wikipedia.org/wiki/%E5%87%B8%E5%8C%85" target="_blank" rel="noopener">凸包问题</a> ，凸包问题的解决方法有：</p>
+<ol>
+<li>增量式算法</li>
+<li>包裹法 </li>
+<li>Graham 扫描法</li>
+<li>单调链</li>
+</ol>
+<p>由于<code>Graham 扫描法</code> 的效率最高，时间复杂度为 $O(nlogn)$，这里采用该方法。</p>
+<p>算法步骤如下：</p>
+<p>第一步：找到最下边的点，如果有多个点纵坐标相同的点都在最下方，则选取最左边的。在右图中这个点是P。这一步只需要扫描一遍所有的点即可，时间复杂度为 $O(n^2)$</p>
+<p>第二步：将所有的点按照相对于第一步中的得到的点P的<a href="https://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB#.E7.82.B9.E7.9A.84.E8.A1.A8.E7.A4.BA" title="极坐标系" target="_blank" rel="noopener">极角</a>大小进行排序。注意这一步并不需要真的通过计算反三角函数来获取与x轴夹角的大小。可以直接使用该点与P点连线的斜率，或者由P点到该点向量的与沿x轴单位向量的点积来减少计算量。可以使用诸如<a href="https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F" title="快速排序" target="_blank" rel="noopener">快速排序</a>、<a href="https://zh.wikipedia.org/wiki/%E5%A0%86%E6%8E%92%E5%BA%8F" title="堆排序" target="_blank" rel="noopener">堆排序</a>之类的算法进行排序，时间复杂度为$O(nlogn)$。</p>
+<p>第三步：维护一个栈，以保存当前的凸包。按第二步中排序得到的结果，依次将点加入到栈中，如果正在考虑的点与栈顶的两个点不是“向左转”的，就表明当前栈顶的点并不在凸包上，而我们需要将其弹出栈，重复这一个过程直到正在考虑的点与栈顶的两个点是“向左转”的。右边的图解给出了“向左转”和“向右转”的示意：</p>
+<ul>
+<li>刚开始的两个点P、A直接入栈。</li>
+<li>在点B加入时，P-&gt;A-&gt;B就构成左转，因此直接加入点B即可。</li>
+<li>接下来加入点C，A-&gt;B-&gt;C还是构成左转，因此直接加入点C。</li>
+<li>继续加入点D时，B-&gt;C-&gt;D就变成右转了，此时可以观察到如果将BD连线，C将被包含在多边形的内部，因此点C出栈。注意需要继续检查A-&gt;B-&gt;D是左转还是右转，如果还是右转的话B点需要继续出栈，以此类推。这个例子比较简单，A-&gt;B-&gt;D已经是左转了，D点可以入栈。</li>
+<li>最后回到P点，B-&gt;D-&gt;P是左转，算法完成，所求凸包为四边形PABD。</li>
+</ul>
+<p>另外，如果发现三点共线的情况，算法可以考虑将其视为左转或者右转。这取决于究竟只是要求凸包的边界，还是要找到在凸包边界上所有的点。</p>
+<p>我们需要简单地计算两个向量的有向面积，即两个向量的叉乘的结果来判断两个向量的相对位置。</p>
+<h2 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/*计算两点之间距离*/</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">dis</span><span class="params">(Point p1,Point p2)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*利用×乘 计算三点之间关系 0：共线 1：依次成顺时针 2：依次成逆时针*/</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">orientation</span><span class="params">(Point p1,Point p2,Point p3)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> val=(p3.y-p1.y)*(p2.x-p1.x)-(p3.x-p1.x)*(p2.y-p1.y);</span><br><span class="line">        <span class="keyword">if</span>(val==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> val&gt;<span class="number">0</span>?<span class="number">2</span>:<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*将点排序 采用结构体进行排序*/</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pointsComparator</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        Point p0;<span class="comment">/*基准点*/</span></span><br><span class="line">        <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">const</span> Point&amp; p1,<span class="keyword">const</span> Point&amp;  p2)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> val=orientation(p0,p1,p2);</span><br><span class="line">            <span class="keyword">if</span>(val==<span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> dis(p0,p1)&lt;=dis(p0,p2);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> val==<span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pointsComparator(Point p): p0(p)&#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;Point&gt; <span class="title">outerTrees</span><span class="params">(<span class="built_in">vector</span>&lt;Point&gt;&amp; points)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=points.size();</span><br><span class="line">        <span class="keyword">if</span>(n&lt;=<span class="number">3</span>)</span><br><span class="line">            <span class="keyword">return</span> points;</span><br><span class="line">        <span class="keyword">int</span> ymin=points[<span class="number">0</span>].y,minlo=<span class="number">0</span>;<span class="comment">/*找y坐标最小的点，记录其下标*/</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(points[i].y&lt;ymin||(points[i].y==ymin&amp;&amp;points[i].x&lt;points[minlo].x))</span><br><span class="line">                ymin=points[i].y,minlo=i;</span><br><span class="line">        &#125;</span><br><span class="line">        Point tem=points[<span class="number">0</span>];</span><br><span class="line">        points[<span class="number">0</span>]=points[minlo];</span><br><span class="line">        points[minlo]=tem;</span><br><span class="line">        Point p0=points[<span class="number">0</span>];</span><br><span class="line">        sort(points.begin(),points.end(),pointsComparator(p0));</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        Point pn = points.back();</span><br><span class="line">        <span class="keyword">if</span> (orientation(p0, points[<span class="number">1</span>], pn) != <span class="number">0</span>) &#123;<span class="comment">//非所有点都共线</span></span><br><span class="line">            <span class="keyword">int</span> idx = n<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">while</span> (orientation(p0, points[idx], pn) == <span class="number">0</span>) &#123;<span class="comment">//找到</span></span><br><span class="line">                idx--;</span><br><span class="line">            &#125;</span><br><span class="line">            reverse(points.begin() + idx + <span class="number">1</span>, points.end());<span class="comment">//调序</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">vector</span>&lt;Point&gt; vertices;</span><br><span class="line">        vertices.push_back(points[<span class="number">0</span>]);</span><br><span class="line">        vertices.push_back(points[<span class="number">1</span>]);</span><br><span class="line">        vertices.push_back(points[<span class="number">2</span>]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">3</span>;i&lt;n;++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(orientation(vertices[vertices.size()<span class="number">-2</span>],vertices.back(),points[i])==<span class="number">1</span>)</span><br><span class="line">                vertices.pop_back();</span><br><span class="line">            vertices.push_back(points[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> vertices;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/image/wechatpay.png" alt="Linwei Zhang WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/07/Leetcode-Weekly-Contest-31-题解/" rel="next" title="Leetcode Weekly Contest 31 题解">
+                <i class="fa fa-chevron-left"></i> Leetcode Weekly Contest 31 题解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/21/Leetcode-Weekly-Contest-33-题解/" rel="prev" title="Leetcode Weekly Contest 33 题解">
+                Leetcode Weekly Contest 33 题解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://avatars1.githubusercontent.com/u/4262706?v=3&s=120" alt="Linwei Zhang">
+          <p class="site-author-name" itemprop="name">Linwei Zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yimun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/linwei-zhang-926b60121/" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://douban.com/people/yimun" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/yimun" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ol class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/2018/01/21/P-贴图和文件分享工具/" title="P-贴图和文件分享工具" target="_blank">P-贴图和文件分享工具</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/02/一种移动应用Http请求的加密方法——以Android为例/" title="一种移动应用Http请求的加密方法——以Android为例" target="_blank">一种移动应用Http请求的加密方法——以Android为例</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/17/使用ContentProvider实现跨进程方法调用-RPC/" title="使用ContentProvider实现跨进程方法调用(RPC)" target="_blank">使用ContentProvider实现跨进程方法调用(RPC)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/23/Android-消息机制和多线程/" title="Android 消息机制和多线程" target="_blank">Android 消息机制和多线程</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/22/Android-View-事件分发和冲突解决/" title="Android View 事件分发和冲突解决" target="_blank">Android View 事件分发和冲突解决</a>
+          </li>
+        
+      </ol>
+    </div>
+
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#581-Shortest-Unsorted-Continuous-Subarray"><span class="nav-number">1.</span> <span class="nav-text">581. Shortest Unsorted Continuous Subarray</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路一：排序比较法"><span class="nav-number">1.1.</span> <span class="nav-text">思路一：排序比较法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.1.1.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路二：首尾指针搜索"><span class="nav-number">1.2.</span> <span class="nav-text">思路二：首尾指针搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#582-Kill-Process"><span class="nav-number">2.</span> <span class="nav-text">582. Kill Process</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">2.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-2"><span class="nav-number">2.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#583-Delete-Operation-for-Two-Strings"><span class="nav-number">3.</span> <span class="nav-text">583. Delete Operation for Two Strings</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路-1"><span class="nav-number">3.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-3"><span class="nav-number">3.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#587-Erect-the-Fence"><span class="nav-number">4.</span> <span class="nav-text">587. Erect the Fence</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路-2"><span class="nav-number">4.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-4"><span class="nav-number">4.2.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Linwei Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yimu.me/2017/05/14/Leetcode-Weekly-Contest-32-题解/';
+          this.page.identifier = '2017/05/14/Leetcode-Weekly-Contest-32-题解/';
+          this.page.title = 'LeetCode Weekly Contest 32 题解';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yimublog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

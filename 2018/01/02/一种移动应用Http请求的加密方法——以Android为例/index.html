@@ -1,0 +1,1289 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="7GWFR7_FMpiXLkO6Rm7aDNiRPmgj0Zxs6SZiF-iBtnI">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="加密,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="现阶段移动应用主要通过Restful API请求的方式与后端进行交互，这就导致了不少问题。客户端的请求可能通过各种的方式被破解，比如抓包，反编译等。由此服务端将会面临巨大的安全风险，造成被恶意攻击，服务过载瘫痪，数据泄密等问题。 当然，规避问题的方式有很多，如升级https，服务端做IP请求次数限制，请求加密验证等等。本文以Android移动端为例介绍一种请求加密的方式，能够有效的在服务端和客户端">
+<meta name="keywords" content="加密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一种移动应用Http请求的加密方法——以Android为例">
+<meta property="og:url" content="http://yimu.me/2018/01/02/一种移动应用Http请求的加密方法——以Android为例/index.html">
+<meta property="og:site_name" content="Yimu&#39;s Blog">
+<meta property="og:description" content="现阶段移动应用主要通过Restful API请求的方式与后端进行交互，这就导致了不少问题。客户端的请求可能通过各种的方式被破解，比如抓包，反编译等。由此服务端将会面临巨大的安全风险，造成被恶意攻击，服务过载瘫痪，数据泄密等问题。 当然，规避问题的方式有很多，如升级https，服务端做IP请求次数限制，请求加密验证等等。本文以Android移动端为例介绍一种请求加密的方式，能够有效的在服务端和客户端">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-24T06:28:19.047Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一种移动应用Http请求的加密方法——以Android为例">
+<meta name="twitter:description" content="现阶段移动应用主要通过Restful API请求的方式与后端进行交互，这就导致了不少问题。客户端的请求可能通过各种的方式被破解，比如抓包，反编译等。由此服务端将会面临巨大的安全风险，造成被恶意攻击，服务过载瘫痪，数据泄密等问题。 当然，规避问题的方式有很多，如升级https，服务端做IP请求次数限制，请求加密验证等等。本文以Android移动端为例介绍一种请求加密的方式，能够有效的在服务端和客户端">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yimu.me/2018/01/02/一种移动应用Http请求的加密方法——以Android为例/">
+
+
+
+
+
+  <title>一种移动应用Http请求的加密方法——以Android为例 | Yimu's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-67911993-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?226cee0dbc85b76161f9f1234e2a37f2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yimu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">在翻山越岭的尽头，正当年少</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yimu.me/2018/01/02/一种移动应用Http请求的加密方法——以Android为例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Linwei Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/4262706?v=3&s=120">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yimu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">一种移动应用Http请求的加密方法——以Android为例</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-02T16:25:13+00:00">
+                2018-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>现阶段移动应用主要通过Restful API请求的方式与后端进行交互，这就导致了不少问题。客户端的请求可能通过各种的方式被破解，比如抓包，反编译等。由此服务端将会面临巨大的安全风险，造成被恶意攻击，服务过载瘫痪，数据泄密等问题。</p>
+<p>当然，规避问题的方式有很多，如升级https，服务端做IP请求次数限制，请求加密验证等等。本文以Android移动端为例介绍一种请求加密的方式，能够有效的在服务端和客户端间进行加密鉴权，确保请求合法性，降低服务端的安全风险。</p>
+<a id="more"></a>
+<h2 id="以APK签名为密钥"><a href="#以APK签名为密钥" class="headerlink" title="以APK签名为密钥"></a>以APK签名为密钥</h2><p>无论对称非对称加密，都逃离不了密钥体系，如何寻找一个安全可靠的密钥成了重中之重。回望Android的打包过程中，APK签名是相对最安全，无法被伪造破解的一个私钥，因此我们把目光放到了它身上。毫无疑问的，Android系统也给应用内部提供了获取签名的方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getApkSignature</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 获取apk签名做密钥</span></span><br><span class="line">        PackageInfo packageInfo = context.getPackageManager().getPackageInfo(</span><br><span class="line">               context.getPackageName(), PackageManager.GET_SIGNATURES);</span><br><span class="line">        String password = Base64.encodeToString(packageInfo.signatures[<span class="number">0</span>].toByteArray(),</span><br><span class="line">               Base64.DEFAULT);</span><br><span class="line">        <span class="keyword">return</span> password;</span><br><span class="line">   &#125; <span class="keyword">catch</span> (PackageManager.NameNotFoundException e) &#123;</span><br><span class="line">       e.printStackTrace();</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>为了可读性考虑，这里的签名取出后使用Base64进行编码</em></p>
+<h2 id="AES加解密"><a href="#AES加解密" class="headerlink" title="AES加解密"></a>AES加解密</h2><p>AES的英文为Advanced Encryption Standard，高级加密标准，是美国政府采用的一种加密标准。在密码学当中又称作为RIJNDAEL算法，这是一种密码长度与数据块长度都可以变化的分组分组加密算法，这个标准由于安全、性能好、效率高、实用、灵活而被用来替代原先的DES，已经被多方分析且广为全世界所使用。AES是现代的<strong>对称</strong>加密算法，通常的实现是使用128位加密。</p>
+<p>在Java标准库中，也已经给出了AES的算法实现。方便使用，本文对AES做了一下简单封装：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AES</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String IV = <span class="string">"CUSTOMGIVEDAPPIV"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Encrypt string to string with password</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> rawData</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> password</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">encrypt</span><span class="params">(String rawData, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            SecretKeySpec key = generateKey(password);</span><br><span class="line">            <span class="keyword">byte</span>[] result = doEncrypt(key, rawData.getBytes());</span><br><span class="line">            <span class="keyword">return</span> Base64.encodeToString(result, Base64.DEFAULT);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">return</span> rawData;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">decrypt</span><span class="params">(String cipherData, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            SecretKeySpec key = generateKey(password);</span><br><span class="line">            <span class="keyword">byte</span>[] enc = Base64.decode(cipherData, Base64.DEFAULT);</span><br><span class="line">            <span class="keyword">byte</span>[] result = doDecrypt(key, enc);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(result);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            Log.i(<span class="string">"xxx"</span>, e.getMessage());</span><br><span class="line">            <span class="keyword">return</span> cipherData;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> password</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> SecretKeySpec <span class="title">generateKey</span><span class="params">(String password)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (password == <span class="keyword">null</span>) &#123;</span><br><span class="line">            password = <span class="string">""</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        StringBuffer sb = <span class="keyword">new</span> StringBuffer(<span class="number">16</span>);</span><br><span class="line">        sb.append(password);</span><br><span class="line">        <span class="keyword">while</span> (sb.length() &lt; <span class="number">16</span>) &#123;</span><br><span class="line">            sb.append(<span class="string">"\0"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sb.length() &gt; <span class="number">16</span>) &#123;</span><br><span class="line">            sb.setLength(<span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            data = sb.toString().getBytes(<span class="string">"UTF-8"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SecretKeySpec(data, <span class="string">"AES"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES  加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key   AES 加密的KEY</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> clear AES 加密的内容 （128位的明文）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 返回 128位的密文</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] doEncrypt(SecretKeySpec key, <span class="keyword">byte</span>[] clear) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        Cipher cipher = Cipher.getInstance(<span class="string">"AES/CBC/PKCS5Padding"</span>);</span><br><span class="line">        IvParameterSpec ivspec = <span class="keyword">new</span> IvParameterSpec(IV.getBytes());</span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, key, ivspec);</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(clear);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES  解密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key       AES 解密的KEY</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> encrypted AES 解密的内容 （128位的密文）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 返回 （128位的明文）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] doDecrypt(SecretKeySpec key, <span class="keyword">byte</span>[] encrypted) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        Cipher cipher = Cipher.getInstance(<span class="string">"AES/CBC/PKCS5Padding"</span>);</span><br><span class="line">        IvParameterSpec ivspec = <span class="keyword">new</span> IvParameterSpec(IV.getBytes());</span><br><span class="line">        cipher.init(Cipher.DECRYPT_MODE, key, ivspec);</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(encrypted);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>代码中的<code>IV</code>指的是偏移常量，最少需要16个字节的长度，你们可以根据喜好自行定义它的值</em></p>
+<h2 id="apikey，apisecret和token"><a href="#apikey，apisecret和token" class="headerlink" title="apikey，apisecret和token"></a>apikey，apisecret和token</h2><p>在Restful后台服务中，通常会设计apikey，apisecret和token这三个值，他们在用户身份验证中扮演着不同的作用：</p>
+<ul>
+<li>apikey: 颁发给应用或者机构的密钥，用于标明应用或者机构的身份，相当于用户名，保密等级低</li>
+<li>apisecret：颁发给客户端的私钥，用于对请求进行签名，服务端可以对签名验证其合法性，保密等级高</li>
+<li>token：通常指Access token，即用户私钥，在每个用户登录之后自动生成，用于验证登录用户的身份，存在过期时间，保密等级高</li>
+</ul>
+<h2 id="加密apikey和apisecret"><a href="#加密apikey和apisecret" class="headerlink" title="加密apikey和apisecret"></a>加密apikey和apisecret</h2><p>为了安全性考虑，我们不能直接将apikey和apisecret写在客户端中，这样的常量字符串极有可能被反编译破解。利用上面提到的APK签名和AES加解密算法，很容易想到可以使用他们对密钥进行加密，从而在代码中只存储加密后的apikey和apisecret。当应用启动后，读取APK签名并解密密钥。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取加密结果（打包前操作）</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">get</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 获取apk签名做密钥</span></span><br><span class="line">      PackageInfo packageInfo = context.getPackageManager().getPackageInfo(</span><br><span class="line">              context.getPackageName(), PackageManager.GET_SIGNATURES);</span><br><span class="line">      String password = Base64.encodeToString(packageInfo.signatures[<span class="number">0</span>].toByteArray(),</span><br><span class="line">              Base64.DEFAULT);</span><br><span class="line">      <span class="comment">// 用签名解密出api key</span></span><br><span class="line">      Log.d(TAG, <span class="string">"Encrypted apikey="</span> + AES.encrypt(<span class="string">"thisisapikey"</span>, password));</span><br><span class="line">      <span class="comment">// G6t3IHRvM6GQ28RZ3RFojQ==</span></span><br><span class="line">      Log.d(TAG, <span class="string">"Encrypted apisecret="</span> + AES.encrypt(<span class="string">"thisisapisecret"</span>, password));</span><br><span class="line">      <span class="comment">// vtZn+Kmt+wK4zy9xSjrlqg==</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (PackageManager.NameNotFoundException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解密密钥（启动后操作）</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ENCRYPTED_API_KEY = <span class="string">"G6t3IHRvM6GQ28RZ3RFojQ=="</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ENCRYPTED_API_SECRET = <span class="string">"vtZn+Kmt+wK4zy9xSjrlqg=="</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initKey</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">   PackageInfo packageInfo = <span class="keyword">null</span>;</span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">       <span class="comment">// 获取apk签名做密钥</span></span><br><span class="line">       packageInfo = context.getPackageManager().getPackageInfo(</span><br><span class="line">               context.getPackageName(), PackageManager.GET_SIGNATURES);</span><br><span class="line">       String password = Base64.encodeToString(packageInfo.signatures[<span class="number">0</span>].toByteArray(),</span><br><span class="line">               Base64.DEFAULT);</span><br><span class="line">       <span class="comment">// 用签名解密出api key</span></span><br><span class="line">       mApiKey = AES.decrypt(ENCRYPTED_API_KEY, password);</span><br><span class="line">       mApiSecret = AES.decrypt(ENCRYPTED_API_SECRET, password);</span><br><span class="line">   &#125; <span class="keyword">catch</span> (PackageManager.NameNotFoundException e) &#123;</span><br><span class="line">       e.printStackTrace();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="一重验证：apikey-token验证"><a href="#一重验证：apikey-token验证" class="headerlink" title="一重验证：apikey + token验证"></a>一重验证：apikey + token验证</h2><p>在请求中添加apikey和Access token，服务端对二者做简单验证。其中，<br>apikey：请求中apikey的添加没有硬性规定，不过一般放在query参数中即可。<br>token：OAuth标准规范中，通常是在请求Header中加入Authorization字段，值为<code>Bearer xxx</code>。</p>
+<h2 id="二重验证：校验请求签名合法性"><a href="#二重验证：校验请求签名合法性" class="headerlink" title="二重验证：校验请求签名合法性"></a>二重验证：校验请求签名合法性</h2><p>如果apikey和token遭遇泄露，上面的验证方式将不再是安全的。因此很有必要添加第二重验证，需要注意的是，这里的验证方式不是唯一的，只需客户端和服务端协商好即可。抛玉引转，先简单介绍一种校验方式：</p>
+<p>简而言之，就是在请求参数里加上签名摘要参数，这个签名由以下部分构成：请求方式+资源路径+token+时间戳，即<br><code>{GET|POST}&amp;{PATH}&amp;{TOKEN}&amp;{TIMESTAMP}</code>。拼接得到的结果再使用apisecret私钥进行hmac哈希计算，得到摘要字符串，连同时间戳附带在请求参数里。后端收到请求后做同样的运算，如果摘要相同说明这个请求是合法的，缺少摘要或者不符则为非法请求。上述算法的客户端实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 计算签名信息</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> Pair&lt;String, String&gt; <span class="title">getRequestSignature</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (<span class="keyword">null</span> == request) &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   String apiSecret = Api.get().apiSecret();</span><br><span class="line">   <span class="keyword">if</span> (TextUtils.isEmpty(apiSecret)) &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">final</span> StringBuilder s = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">   s.append(request.method());</span><br><span class="line">   String path = request.url().encodedPath();</span><br><span class="line">   <span class="keyword">if</span> (path == <span class="keyword">null</span>) &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   path = Uri.decode(path);</span><br><span class="line">   <span class="keyword">if</span> (path == <span class="keyword">null</span>) &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (path.endsWith(<span class="string">"/"</span>)) &#123;</span><br><span class="line">       path = path.substring(<span class="number">0</span>, path.length() - <span class="number">1</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   s.append(<span class="string">"&amp;"</span>).append(Uri.encode(path));</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 获取token</span></span><br><span class="line">   String accessToken = request.header(Http.HEADER_AUTHORIZATION);</span><br><span class="line">   <span class="keyword">if</span> (!TextUtils.isEmpty(accessToken)) &#123;</span><br><span class="line">       accessToken = accessToken.substring(OAUTH_PREFIX.length());</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (!TextUtils.isEmpty(accessToken)) &#123;</span><br><span class="line">       s.append(<span class="string">"&amp;"</span>).append(accessToken);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">final</span> <span class="keyword">long</span> timestamp = System.currentTimeMillis() / <span class="number">1000</span>;</span><br><span class="line">   s.append(<span class="string">"&amp;"</span>).append(timestamp);</span><br><span class="line">   String baseString = s.toString();</span><br><span class="line">   String signature = HMACHash1.encode(apiSecret, baseString);</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">new</span> Pair&lt;&gt;(signature, String.valueOf(timestamp));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="示例项目"><a href="#示例项目" class="headerlink" title="示例项目"></a>示例项目</h2><p>详细的示例代码可以在 <a href="https://github.com/yimun/ApiEncryptDemo" target="_blank" rel="noopener">ApiEncryptDemo</a> 中找到，项目使用OkHttp进行网络通信，基于OkHttp的拦截器实现签名参数的添加。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="http://www.cnblogs.com/luop/p/4334160.html" target="_blank" rel="noopener">密码算法详解——AES</a></li>
+<li><a href="https://ecommerce.shopify.com/c/shopify-apis-and-technology/t/what-is-the-difference-between-api-key-secret-key-and-refresh-token-221034" target="_blank" rel="noopener">What is the difference between API key, Secret Key and Refresh Token?</a></li>
+<li><a href="http://www.cnblogs.com/songhan/archive/2012/07/29/2613898.html" target="_blank" rel="noopener">Hash， MAC，HMAC</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/image/wechatpay.png" alt="Linwei Zhang WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/加密/" rel="tag"># 加密</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/17/使用ContentProvider实现跨进程方法调用-RPC/" rel="next" title="使用ContentProvider实现跨进程方法调用(RPC)">
+                <i class="fa fa-chevron-left"></i> 使用ContentProvider实现跨进程方法调用(RPC)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/21/P-贴图和文件分享工具/" rel="prev" title="P-贴图和文件分享工具">
+                P-贴图和文件分享工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://avatars1.githubusercontent.com/u/4262706?v=3&s=120" alt="Linwei Zhang">
+          <p class="site-author-name" itemprop="name">Linwei Zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yimun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/linwei-zhang-926b60121/" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://douban.com/people/yimun" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/yimun" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ol class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/2018/01/21/P-贴图和文件分享工具/" title="P-贴图和文件分享工具" target="_blank">P-贴图和文件分享工具</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/02/一种移动应用Http请求的加密方法——以Android为例/" title="一种移动应用Http请求的加密方法——以Android为例" target="_blank">一种移动应用Http请求的加密方法——以Android为例</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/17/使用ContentProvider实现跨进程方法调用-RPC/" title="使用ContentProvider实现跨进程方法调用(RPC)" target="_blank">使用ContentProvider实现跨进程方法调用(RPC)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/23/Android-消息机制和多线程/" title="Android 消息机制和多线程" target="_blank">Android 消息机制和多线程</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/22/Android-View-事件分发和冲突解决/" title="Android View 事件分发和冲突解决" target="_blank">Android View 事件分发和冲突解决</a>
+          </li>
+        
+      </ol>
+    </div>
+
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#以APK签名为密钥"><span class="nav-number">1.</span> <span class="nav-text">以APK签名为密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AES加解密"><span class="nav-number">2.</span> <span class="nav-text">AES加解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apikey，apisecret和token"><span class="nav-number">3.</span> <span class="nav-text">apikey，apisecret和token</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加密apikey和apisecret"><span class="nav-number">4.</span> <span class="nav-text">加密apikey和apisecret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一重验证：apikey-token验证"><span class="nav-number">5.</span> <span class="nav-text">一重验证：apikey + token验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二重验证：校验请求签名合法性"><span class="nav-number">6.</span> <span class="nav-text">二重验证：校验请求签名合法性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例项目"><span class="nav-number">7.</span> <span class="nav-text">示例项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">8.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Linwei Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yimu.me/2018/01/02/一种移动应用Http请求的加密方法——以Android为例/';
+          this.page.identifier = '2018/01/02/一种移动应用Http请求的加密方法——以Android为例/';
+          this.page.title = '一种移动应用Http请求的加密方法——以Android为例';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://yimublog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
